@@ -16,32 +16,55 @@
 package be.pdty.vocabulary.server;
 
 import java.io.File;
+import java.net.URI;
+import java.nio.file.Files;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.resource.Resource;
 
 @SuppressWarnings("nls")
 public class Main
 {
   public static void main(String[] args) throws Exception
   {
-    if(args.length!=3)
+    int port=80;
+    if(args.length>0)
     {
-      System.err.println("Usage: Main port dataFolder resourceFolder");
-      System.exit(1);
+      port=Integer.parseInt(args[0]);
     }
-    int port=Integer.parseInt(args[0]);
-    File data=new File(args[1]);
-    if(!data.exists() || !data.isDirectory())
+    else
     {
-      System.err.println(args[1]+" does not exist or is not a directory");
-      System.exit(2);
+      Log.getLog().info("Using HTTP port "+port);
     }
-    File rsc=new File(args[2]);
-    if(!data.exists() || !data.isDirectory())
+    File data=new File("data");
+    if(args.length>1)
+    {
+      data=new File(args[1]);
+      if(data.exists() && !data.isDirectory())
+      {
+        System.err.println(args[1]+" already exists but is not a directory");
+        System.exit(2);
+      }
+    }
+    else
+    {
+      Log.getLog().info("Using default dataFolder "+data.getAbsolutePath());
+    }
+    if(!data.exists())
+    {
+      Files.createDirectories(data.toPath());
+      Log.getLog().info("Created directory "+data.getAbsolutePath());
+      data.mkdirs();
+    }
+    
+    File rsc=null;
+    if(args.length>2) rsc=new File(args[2]);
+    if(rsc!=null && (!rsc.exists() || !rsc.isDirectory()))
     {
       System.err.println(args[2]+" does not exist or is not a directory");
       System.exit(3);
@@ -61,7 +84,23 @@ public class Main
     handlers.addHandler(serverHandler);
 
     ResourceHandler resourceHandler = new ResourceHandler();
-    resourceHandler.setResourceBase(rsc.getAbsolutePath());
+    if(rsc==null)
+    {
+      Resource base = Resource.newClassPathResource(".");
+      if (base!=null)
+      {
+        resourceHandler.setBaseResource(base);
+      }
+      else
+      {    
+        URI uri = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+        resourceHandler.setBaseResource(Resource.newResource("jar:" + uri + "!/"));
+      }
+    }
+    else
+    {
+      resourceHandler.setResourceBase(rsc.getAbsolutePath());
+    }
     handlers.addHandler(resourceHandler);
     
     server.setHandler(handlers);

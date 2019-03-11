@@ -28,6 +28,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,6 +37,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+import org.eclipse.jetty.util.log.Log;
 
 import be.pdty.vocabulary.server.JSonUtils.JSonStream;
 import be.pdty.vocabulary.server.JSonUtils.Json;
@@ -378,10 +382,29 @@ public class Store
     ans.leftTitle="Left";
     ans.rightTitle="Right";
     
-    if(!words.exists()) words.createNewFile();
+    if(!words.exists())
+    {
+      words.createNewFile();
+      Files.write(words.toPath(),Arrays.asList(
+          "# Comments start with a dash",
+          "# The initial ! indicates language names",
+          "!French|English",
+          "Bonjour|Hello",
+          "Monde|World",
+          "",
+          "# Several possibilities may exist",
+          "Fort,Solide|Strong",
+          "Bleu|Blue,Rookie,Bruise",
+          "",
+          "# Additional remarks can be specified",
+          "Matraque,Association|Club|Different meaning for verb and noun"
+          ));
+      Log.getLog().info("Created "+words.getAbsolutePath());
+    }
     
-    Files.lines(words.toPath()).
-      map(s->s.trim()).
+    try(Stream<String> stream=Files.lines(words.toPath()))
+    {
+      stream.map(s->s.trim()).
       filter(s->!s.startsWith("#")).
       map(s->s.split("\\|",3)).
       filter(array->array.length>=2).
@@ -389,26 +412,26 @@ public class Store
       {
         String left;
         String rightGroup;
-        if(direction==Direction.LEFT_TO_RIGHT)
+        if(array[0].trim().startsWith("!"))
         {
-          left=array[0].trim();
-          rightGroup=array[1].trim();
+          ans.leftTitle=array[0].substring(1);
+          ans.rightTitle=array[1];
         }
         else
         {
-          left=array[1].trim();
-          rightGroup=array[0].trim();
-        }
-        String comment="";
-        if(array.length>2) comment=array[2].trim();
-        
-        if(left.startsWith("!"))
-        {
-          ans.leftTitle=left.substring(1);
-          ans.rightTitle=rightGroup;
-        }
-        else
-        {
+          if(direction==Direction.LEFT_TO_RIGHT)
+          {
+            left=array[0].trim();
+            rightGroup=array[1].trim();
+          }
+          else
+          {
+            left=array[1].trim();
+            rightGroup=array[0].trim();
+          }
+          String comment="";
+          if(array.length>2) comment=array[2].trim();
+          
           left=left.split(",")[0];
           List<AlternativeResponse> alternatives=ans.allWords.get(left);
           if(alternatives==null)
@@ -420,6 +443,7 @@ public class Store
           alternatives.add(new AlternativeResponse(rightGroup.split(","),comment));
         }
       });
+    }
     
     return ans;
   }
