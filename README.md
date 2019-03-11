@@ -8,15 +8,19 @@ Distribution is available in target/appassembler. To run, execute vocabulary por
 
 words.txt is a simple text file structured as a pipe-separated format:
 
- # Comments start with a dash<br>
- # The initial ! indicates language names<br>
- !French|English<br>
- Bonjour|Hello<br>
- Monde|World<br>
- <br>
- # Several possibilities may exist<br>
- Fort,Solide|Strong<br>
- Bleu|Blue,Rookie,Bruise<br>
- <br>
- # Additional remarks can be specified<br>
- Matraque,Association|Club|Different meaning for verb and noun<br>
+<pre>
+
+\# Comments start with a dash
+\# The initial ! indicates language names
+!French|English
+Bonjour|Hello
+Monde|World
+
+\# Several possibilities may exist
+Fort,Solide|Strong
+Bleu|Blue,Rookie,Bruise
+
+\# Additional remarks can be specified
+Matraque,Association|Club|Different meaning for verb and noun
+
+</pre>
