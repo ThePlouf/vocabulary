@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="scripts.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Vocabulary</title>
+    </head>
+    
+    <body onload="newWord();">
+        <div id="directionDiv">
+            <p class="title">Select direction</p>
+            <div id="directionGroup">
+                <input type="radio" name="direction" id="leftToRight" value="leftToRight" checked="true" onchange="newWord();"><div class="radioContent-selected" id="leftToRightContentDiv" onclick="selectDir('L');"></div></input>
+                <input type="radio" name="direction" id="rightToLeft" value="rightToLeft" onchange="newWord();"><div class="radioContent-unselected" id="rightToLeftContentDiv" onclick="selectDir('R');"></div></input>
+            </div>
+        </div>
+        
+        <div id="challengeDiv">
+            <p class="title">Translate the following word</p>
+            <div id="challengeArea">
+                <form id="challengeForm" onsubmit="submitResponse();event.preventDefault();">
+                    <div id="challengeText"></div>
+                    <input id="challengeResponse" type="text" autocomplete="off" oninput="responseTextUpdated();">
+                    <input id="challengeSubmit" type="submit" value="Ok">
+                </form>
+            
+                <div id="resultDiv">
+                    <div id="success" class="hiddenDiv">
+                        <div class="title" id="successAchievement"></div>
+                        <div class="title" id="successMessage"></div>
+                        <div id="successAlternativesDiv">
+                        </div>
+                    </div>
+                    <div id="failure" class="hiddenDiv">
+                        <div class="title" id="failureAchievement"></div>
+                        <div class="title" id="failureMessage"></div>
+                        <div id="failureAlternativesDiv">
+                        </tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="statisticsDiv">
+            <p class="title">Hall of fame</p>
+            <div id="statisticsArea">
+            </div>
+        </div>
+        
+    </body>
+</html>

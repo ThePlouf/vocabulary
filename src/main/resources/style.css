@@ -1,0 +1,195 @@
+#loginForm {
+    border: 2px solid;
+    border-radius: 15px;
+    padding: 20px;
+    background-color:lightyellow;
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:50px;
+    font-size:9vw;
+}
+
+#name {
+    display:block;
+    font-size:8vw;
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+    padding:0px;
+}
+
+#ok {
+    font-size:8vw;
+}
+
+#directionDiv {
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    font-size:4vw;
+}
+
+#directionGroup {
+    border: 2px solid;
+    border-radius: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color:lightyellow;
+    display:table;
+    margin:0;
+    table-layout: auto;
+    border-collapse: merge;
+    border-spacing: 0px;
+    width:90%;
+}
+
+#challengeDiv {
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    font-size:4vw;
+}
+
+#challengeArea {
+    border: 2px solid;
+    border-radius: 15px;
+    padding: 20px;
+    background-color:lightblue;
+    width:90%;
+}
+
+#resultDiv {
+    margin-top: 10px;
+}
+
+#success {
+    border: 2px solid;
+    border-radius: 15px;
+    padding: 20px;
+    background-color:lightgreen;
+}
+
+#failure {
+    border: 2px solid;
+    border-radius: 15px;
+    padding: 20px;
+    background-color:lightsalmon;
+}
+
+#statisticsDiv {
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+    font-size:4vw;
+}
+
+#statisticsArea {
+    border: 2px solid;
+    border-radius: 15px;
+    padding: 20px;
+    background-color:lightgray;
+    font-size:3vw;
+    width:90%;
+}
+
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+    width:100%;
+}
+
+tr {
+    border-bottom: 1px solid;
+}
+
+td {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+th {
+    font-weight:normal;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.title {
+    margin-bottom:0px;
+}
+
+#challengeText {
+    font-weight:bold;
+    font-size:8vw;
+}
+
+#challengeResponse {
+    display:block;
+    font-size:8vw;
+    padding:0px;
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#adminForm {
+    margin-right:10px;
+}
+
+#adminArea {
+    width:100%;
+}
+
+.radioContent-selected {
+    cursor:pointer;
+    border: 2px solid;
+    border-radius: 15px;
+    background-color: lightgray;
+}
+
+.radioContent-unselected {
+    cursor:pointer;
+    border: 2px solid;
+    border-color: lightyellow;
+}
+
+#leftToRightContentDiv {
+    
+    text-align:center;
+    display:table-cell;
+}
+
+#rightToLeftContentDiv {
+    text-align:center;
+    display:table-cell;
+}
+
+#leftToRight,#rightToLeft {
+    display:none;
+}
+
+.hiddenDiv {
+    display: none;
+}
+
+#challengeSubmit,#loginSubmit {
+    display: none;
+}
+
+.achievementImageLeft {
+    float:left;
+    display:block-inline;
+}
+
+.achievementImageRight {
+    float:right;
+    display:block-inline;
+}
+
+.achievementDescription {
+    text-align:center;
+    min-height:130px;
+}
